@@ -1,10 +1,19 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
+const glob = require('glob')
+
+const backgroundFiles = glob.sync(path.join(__dirname, '../src/background/**/*.ts*'))
+const contentFiles = glob.sync(path.join(__dirname, '../src/content/**/*.ts*'))
+
+console.log("content files: ", contentFiles)
+console.log("background files: ",  backgroundFiles)
+
 module.exports = {
    mode: "production",
-//    entry: {
-//       background: path.resolve(__dirname, "..", "src", "*.ts"),
-//    },
+   entry: {
+      background: backgroundFiles,
+      content: contentFiles
+   },
    output: {
       path: path.join(__dirname, "../dist"),
       filename: "[name].js",

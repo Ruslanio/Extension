@@ -1,6 +1,6 @@
 {
-	"name": "Orange It Up!",
-	"description": "This extension is created for changing the background color of the page orange.",
+	"name": "Factfull",
+	"description": "This extension is created for providing facts!",
 	"version": "1.0",
 	"manifest_version": 3,
   "action": {
@@ -12,6 +12,6 @@
 		"scripting"
 	],
   "background": {
-		"service_worker": "main.js"
+		"service_worker": "background.js"
 	}
 }
