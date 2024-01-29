@@ -1,38 +1,40 @@
-import { MessageCode, sendMessage } from "./messages";
+import { Message, MessageCode, createMessageHandler, sendMessage } from "./messages";
+const TAG = "CONTENT INDEX"
 
-console.log("index init")
+console.log(TAG, "index init")
+
+// Subscriptions init
+chrome.runtime.onMessage.addListener(createMessageHandler(messageHandler))
+
 
 function onCheckClicked() {
     showProgress()
     setResultText("")
 
-    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         console.log("inside query")
         var currentTab = tabs[0];
         if (currentTab) {
-            sendMessage(MessageCode.BG_CHECK_BY_URL, currentTab.url)
+            sendMessage({ code: MessageCode.BG_CHECK_BY_URL, payload: currentTab.url })
         }
     });
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     console.log("DOM loaded")
     document.getElementById("btn-check")?.addEventListener('click', onCheckClicked)
 })
 
-chrome.runtime.onMessage.addListener(messageHandler)
-
-function messageHandler(request: any, sender: chrome.runtime.MessageSender, sendResponse: (response: any) => void) {
-    console.log(`CN: message: ${request.code}`)
-    switch(request.code) {
+function messageHandler(message: Message) {
+    switch (message.code) {
         case MessageCode.CN_SHOW_CHECK_RESULT:
-            showCheckResult(request.payload)
+            showCheckResult(message.payload)
             break
         case MessageCode.CN_SHOW_NOT_AN_ARTICLE:
             showNotAnArticle()
             break
-        case null:
-            console.log("Null message")
+        default:
+            console.log(TAG, "Unknown code: ", message.code)
             break
     }
 }
@@ -55,7 +57,7 @@ function setResultText(resultMessage?: string) {
 function hideProgress() {
     var button = document.getElementById("btn-check")
     var progress = document.getElementById("progress")
-    if(progress && button) {
+    if (progress && button) {
         progress.style.display = "none"
         button.style.display = "block"
     }
@@ -64,7 +66,7 @@ function hideProgress() {
 function showProgress() {
     var button = document.getElementById("btn-check")
     var progress = document.getElementById("progress")
-    if(progress && button) {
+    if (progress && button) {
         progress.style.display = "block"
         button.style.display = "none"
     }

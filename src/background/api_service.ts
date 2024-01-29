@@ -36,7 +36,7 @@ export class ApiService {
     }
     
     private getCheckPromt(url: string): string {
-        return `${url} Please analyze the main thesis or argument of the article and compare it with relevant statistical data and information you have access to. I am interested in whether the claims made in the article are supported or contradicted by the data. Try to give an answer in range of 100 to 150 words`
+        return `${url} Please analyze the main thesis or argument of the article and compare it with relevant statistical data and information you have access to. I am interested in whether the claims made in the article are supported or contradicted by the data. Try to give an answer in range of 100 to 150 words. Format answer as bulleted list`
     }
 
     private getIsArticlePromt(url: string): string {
