@@ -1,6 +1,9 @@
+const properties = require('./properties.json')
+
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 const glob = require('glob')
+const webpack = require('webpack');
 
 const backgroundFiles = glob.sync(path.join(__dirname, '../src/background/**/*.ts*'))
 const contentFiles = glob.sync(path.join(__dirname, '../src/content/**/*.ts*'))
@@ -37,5 +40,8 @@ module.exports = {
         new CopyPlugin({
             patterns: [{ from: ".", to: ".", context: "public" }]
         }),
+        new webpack.DefinePlugin({
+            API_KEY: JSON.stringify(properties['api-key'])
+        })
     ],
 };

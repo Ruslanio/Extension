@@ -3,8 +3,7 @@ import OpenAI from "openai";
 export class ApiService {
 
     private openAi = new OpenAI({
-        //TODO: GET RID OF THIS!!!
-        apiKey : "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"
+        apiKey : API_KEY
     })
 
     public async checkByUrl(url: string, callback: (resultMessage: string | null) => void) {
