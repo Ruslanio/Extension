@@ -1,0 +1,1 @@
+export const NOT_AN_ARTICLE = "This is not even an article, dolbaeb"
