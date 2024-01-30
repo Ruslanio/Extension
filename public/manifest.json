@@ -3,15 +3,16 @@
 	"description": "This extension is created for providing facts!",
 	"version": "1.0",
 	"manifest_version": 3,
-  "action": {
-    "default_popup": "index.html",
-    "default_icon": "hello_extensions.png"
-  },
+	"action": {
+		"default_popup": "index.html",
+		"default_icon": "hello_extensions.png"
+	},
 	"permissions": [
 		"activeTab",
-		"scripting"
+		"scripting",
+		"storage"
 	],
-  "background": {
+	"background": {
 		"service_worker": "background.js"
 	}
 }
