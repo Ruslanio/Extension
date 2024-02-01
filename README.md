@@ -15,7 +15,7 @@ You can do this through github actions:
 ### Upload dist directory to Chrome Extensions
 1. Go to Settings -> Manage Extensions
 2. Click on "Load unpacked" 
-    ![Load unpacked](guide/img/clicl_load.png)
+    ![Load unpacked](guide/img/click_load.png)
 3. Choose dist folder, unzipped in previous guide
 4. Make sure that your extension is pinned for easy access
     ![Pin](guide/img/pin_extension.png)
