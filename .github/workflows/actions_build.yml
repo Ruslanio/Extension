@@ -1,4 +1,4 @@
-name: 'Build'
+name: 'Create Extension Zip file'
 on:
    workflow_dispatch:
 permissions:
@@ -21,4 +21,15 @@ jobs:
          run: npm ci
 
        - name: Build
-         run: npm run buildDebug
+         env: 
+            SECRECT_API_KEY: ${{ secrets.API_KEY }}
+         run: npm run buildActions
+
+       - name: Zip the output directory
+         run: zip -r extension.zip dist
+ 
+       - name: Upload Build Artifact
+         uses: actions/upload-artifact@v2
+         with:
+           name: extension-zipped
+           path: extension.zip

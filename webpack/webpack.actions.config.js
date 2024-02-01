@@ -1,8 +1,7 @@
-const properties = require('./properties.json')
+const webpack = require('webpack');
+
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.config.js');
-
-const webpack = require('webpack');
 
 module.exports = merge(common, {
     optimization: {
@@ -10,7 +9,7 @@ module.exports = merge(common, {
     },
     plugins: [
         new webpack.DefinePlugin({
-            API_KEY: JSON.stringify(properties['api-key'])
+            API_KEY: JSON.stringify(process.env.API_KEY)
         })
     ],
 });
