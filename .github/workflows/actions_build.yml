@@ -20,5 +20,8 @@ jobs:
        - name: Install
          run: npm ci
 
+       - name: Logs
+         run: ls
+
        - name: Build
          run: npm run buildDebug
