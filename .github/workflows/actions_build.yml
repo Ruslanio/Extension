@@ -24,4 +24,6 @@ jobs:
          run: ls
 
        - name: Build
-         run: npm run buildDebug
+         env: 
+            SECRECT_API_KEY: ${{ secrets.API_KEY }}
+         run: npm run buildActions

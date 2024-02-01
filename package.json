@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "buildActions": "API_KEY=$SECRECT_API_KEY webpack --config webpack/webpack.actions.config.js",
     "buildDebug": "webpack --config webpack/webpack.debug.config.js",
     "buildProd": "webpack --config webpack/webpack.prod.config.js"
   },
