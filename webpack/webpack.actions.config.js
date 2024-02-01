@@ -1,45 +1,15 @@
-const path = require('path');
-const CopyPlugin = require('copy-webpack-plugin');
-const glob = require('glob')
 const webpack = require('webpack');
 
-const backgroundFiles = glob.sync(path.join(__dirname, '../src/background/**/*.ts*'))
-const contentFiles = glob.sync(path.join(__dirname, '../src/content/**/*.ts*'))
+const { merge } = require('webpack-merge');
+const common = require('./webpack.common.config.js');
 
-console.log("content files: ", contentFiles)
-console.log("background files: ", backgroundFiles)
-
-module.exports = {
-    mode: "production",
-    entry: {
-        background: backgroundFiles,
-        content: contentFiles
-    },
+module.exports = merge(common, {
     optimization: {
         minimize: false
     },
-    output: {
-        path: path.join(__dirname, "../dist"),
-        filename: "[name].js",
-    },
-    resolve: {
-        extensions: [".ts", ".js"],
-    },
-    module: {
-        rules: [
-            {
-                test: /\.tsx?$/,
-                loader: "ts-loader",
-                exclude: /node_modules/,
-            },
-        ],
-    },
     plugins: [
-        new CopyPlugin({
-            patterns: [{ from: ".", to: ".", context: "public" }]
-        }),
         new webpack.DefinePlugin({
             API_KEY: JSON.stringify(process.env.API_KEY)
         })
     ],
-};
+});
