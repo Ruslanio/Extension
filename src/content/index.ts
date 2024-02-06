@@ -1,7 +1,7 @@
 import { MessageCode, createMessageHandler, sendMessage } from "./messages";
 import { MainScreenState } from "./states";
 import { StateHandler } from "./storage";
-import { NOT_AN_ARTICLE } from "./strings";
+import { GPT_TIMEOUT, MODERATION_FAILED, NOT_AN_ARTICLE, RATE_LIMIT_EXCEEDED, TOO_LONG } from "./strings";
 
 const TAG = "CONTENT INDEX"
 const STATE_KEY_MAIN = "STATE_KEY_MAIN"
@@ -27,10 +27,10 @@ function restoreState() {
         if (prevState != null) {
             Object.assign(state, prevState)
 
-            console.log(TAG,  "restoreState", "state restored to ", prevState)
-            console.log(TAG,  "restoreState", "new steate ", state)
+            console.log(TAG, "restoreState", "state restored to ", prevState)
+            console.log(TAG, "restoreState", "new steate ", state)
         } else {
-            console.log(TAG,  "restoreState", "no previously saved state")
+            console.log(TAG, "restoreState", "no previously saved state")
         }
         render(state)
     })
@@ -41,9 +41,20 @@ function messageHandler(code: MessageCode, payload: any | null) {
         case MessageCode.CN_SHOW_CHECK_RESULT:
             setSummary(payload)
             break
-        case MessageCode.CN_SHOW_NOT_AN_ARTICLE:
+        case MessageCode.CN_ERR_NOT_AN_ARTICLE:
             setError(NOT_AN_ARTICLE)
             break
+        case MessageCode.CN_ERR_TOO_LONG:
+            setError(TOO_LONG)
+            break
+        case MessageCode.CN_ERR_MODERATION_FAILED:
+            setError(MODERATION_FAILED)
+            break
+        case MessageCode.CN_ERR_LIMIT_EXCEEDED:
+            setError(RATE_LIMIT_EXCEEDED)
+            break
+        case MessageCode.CN_ERR_TIMEOUT:
+            setError(GPT_TIMEOUT)
         default:
             console.log(TAG, "Unknown code: ", code)
             break

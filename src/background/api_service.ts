@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { ChatCompletion } from "openai/resources";
 
 export class ApiService {
 
@@ -6,32 +7,20 @@ export class ApiService {
         apiKey : API_KEY
     })
 
-    public async checkByUrl(url: string, callback: (resultMessage: string | null) => void) {
-        const completion = await this.openAi.chat.completions.create({
+    public async checkByUrl(url: string): Promise<ChatCompletion> {
+        return this.openAi.chat.completions.create({
             messages: [{ role: "system", content: this.getCheckPromt(url) }],
             model: "gpt-3.5-turbo",
           });
-        
-          console.log("checkByUrl", completion)
-          var resultMessage = completion.choices[0].message.content
-          callback(resultMessage)
     }
 
-    public async isArticle(url: string, callback: (response: boolean) => void) {
-        const completion = await this.openAi.chat.completions.create({
+    public async isArticle(url: string): Promise<ChatCompletion> {
+        return this.openAi.chat.completions.create({
             messages: [{ role: "system", content: this.getIsArticlePromt(url) }],
             model: "gpt-3.5-turbo",
           });
-
-          console.log("isArticle", completion)
-          var resultMessage = completion.choices[0].message.content
-          callback(this.mapToBool(resultMessage))
     }
 
-    private mapToBool(response: string| null): boolean {
-        return response?.toLowerCase() === "Yes".toLowerCase()
-    }
-    
     private getCheckPromt(url: string): string {
         return `${url} Please analyze the main thesis or argument of the article and compare it with relevant statistical data and information you have access to. I am interested in whether the claims made in the article are supported or contradicted by the data. Try to give an answer in range of 100 to 150 words. Format answer as bulleted list`
     }
