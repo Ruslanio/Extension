@@ -1,1 +1,5 @@
 export const NOT_AN_ARTICLE = "This is not even an article, dolbaeb"
+export const TOO_LONG = "This article is too long, dolbaeb"
+export const MODERATION_FAILED = "Moderation failed, dolbaeb"
+export const RATE_LIMIT_EXCEEDED = "Rate limit exceeded, dolbaeb"
+export const GPT_TIMEOUT = "GPT timeout, dolbaeb"
